@@ -1,0 +1,23 @@
+[
+    {
+        "name": "Salary"
+    },
+    {
+        "name": "Bonus"
+    },
+    {
+        "name": "Rent"
+    },
+    {
+        "name": "Tips"
+    },
+    {
+        "name": "Education"
+    },
+    {
+        "name": "Medicine"
+    },
+    {
+        "name": "Extra"
+    }
+]

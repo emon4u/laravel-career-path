@@ -1,0 +1,14 @@
+[
+    {
+        "amount": "6000",
+        "category": "Rent"
+    },
+    {
+        "amount": "2000",
+        "category": "Education"
+    },
+    {
+        "amount": "2000",
+        "category": "Medicine"
+    }
+]

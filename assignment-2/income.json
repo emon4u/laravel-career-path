@@ -1,0 +1,18 @@
+[
+    {
+        "amount": "20000",
+        "category": "Salary"
+    },
+    {
+        "amount": "5000",
+        "category": "Bonus"
+    },
+    {
+        "amount": "2000",
+        "category": "Tips"
+    },
+    {
+        "amount": "4000",
+        "category": "Extra"
+    }
+]
