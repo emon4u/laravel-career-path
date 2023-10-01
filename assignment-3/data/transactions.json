@@ -1,0 +1,82 @@
+[
+	{
+		"type": "deposit",
+		"user_email": "taher@example.com",
+		"amount": 20000,
+		"recipient_email": null,
+		"timestamp": "2023-10-01 02:28:40",
+		"note": "Add first deposit"
+	},
+	{
+		"type": "deposit",
+		"user_email": "tanjil@example.com",
+		"amount": 20000,
+		"recipient_email": null,
+		"timestamp": "2023-10-01 02:29:57",
+		"note": "Add first Deposit"
+	},
+	{
+		"type": "deposit",
+		"user_email": "masum@example.com",
+		"amount": 20000,
+		"recipient_email": null,
+		"timestamp": "2023-10-01 02:34:40",
+		"note": "Add first Deposit"
+	},
+	{
+		"type": "withdrawal",
+		"user_email": "masum@example.com",
+		"amount": 500,
+		"recipient_email": null,
+		"timestamp": "2023-10-01 02:42:16",
+		"note": "First Withdrawal from account"
+	},
+	{
+		"type": "transfer",
+		"user_email": "masum@example.com",
+		"amount": 2000,
+		"recipient_email": "taher@example.com",
+		"timestamp": "2023-10-01 02:59:04",
+		"note": "Transfer account"
+	},
+	{
+		"type": "deposit",
+		"user_email": "taher@example.com",
+		"amount": 2000,
+		"recipient_email": null,
+		"timestamp": "2023-10-01 02:59:04",
+		"note": "Transfer account"
+	},
+	{
+		"type": "transfer",
+		"user_email": "taher@example.com",
+		"amount": 2000,
+		"recipient_email": "tanjil@example.com",
+		"timestamp": "2023-10-01 02:59:49",
+		"note": "Transfer account"
+	},
+	{
+		"type": "deposit",
+		"user_email": "tanjil@example.com",
+		"amount": 2000,
+		"recipient_email": null,
+		"timestamp": "2023-10-01 02:59:49",
+		"note": "Transfer account"
+	},
+	{
+		"type": "transfer",
+		"user_email": "tanjil@example.com",
+		"amount": 500,
+		"recipient_email": "masum@example.com",
+		"timestamp": "2023-10-01 03:01:29",
+		"note": "Transfer from account"
+	},
+	{
+		"type": "deposit",
+		"user_email": "masum@example.com",
+		"amount": 500,
+		"recipient_email": null,
+		"timestamp": "2023-10-01 03:01:29",
+		"note": "Transfer from account"
+	}
+]

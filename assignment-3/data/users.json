@@ -1,0 +1,30 @@
+[
+    {
+        "type": "admin",
+        "name": "Emon Ahmed",
+        "email": "admin@example.com",
+        "password": "$2y$10$dSJjfeIynMfG4xbErofd6.q4YflcGt0gNqJKSSdIYDT\/HRfskzZ9y",
+        "balance": 0
+    },
+    {
+        "type": "customer",
+        "name": "Tanjil Islam",
+        "email": "tanjil@example.com",
+        "password": "$2y$10$zDivvploJ9vph1j.ChmRgeQ5qHVxurwupo.h01POw6I3zY6CVtv.K",
+        "balance": 21500
+    },
+    {
+        "type": "customer",
+        "name": "Abu Taher",
+        "email": "taher@example.com",
+        "password": "$2y$10$HVk\/hFJ93J\/bYX7t0WIWROxSVxKM9mwoAI\/n22Qxar9PSMxwAvtAa",
+        "balance": 20000
+    },
+    {
+        "type": "customer",
+        "name": "Masum Ahmed",
+        "email": "masum@example.com",
+        "password": "$2y$10$wtruCkfJ7IVBu1iC5iDPOeVFIS.WQAjkNfv5MReZU3asyDAsJpDXW",
+        "balance": 18000
+    }
+]

@@ -1,5 +1,10 @@
 {
 	"phpfmt.psr2": true,
 	"phpfmt.wp": false,
-	"phpfmt.psr1_naming": false
+	"phpfmt.psr1_naming": false,
+	"cSpell.words": [
+		"Masum",
+		"Taher",
+		"Tanjil"
+	]
 }
