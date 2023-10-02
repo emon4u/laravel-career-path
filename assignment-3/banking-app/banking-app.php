@@ -1,6 +1,8 @@
 <?php
 namespace BankingApp;
 
+require_once './vendor/autoload.php';
+
 use BankingApp\Classes\Customer;
 use BankingApp\Classes\Deposit;
 use BankingApp\Classes\JsonStorage;
@@ -10,19 +12,6 @@ use BankingApp\Classes\User;
 use BankingApp\Classes\Withdrawal;
 use BankingApp\Enum\UserType;
 use BankingApp\Interface\Storage;
-
-require_once './interface/Storage.php';
-require_once './classes/JsonStorage.php';
-require_once './enum/UserType.php';
-require_once './enum/TransactionType.php';
-require_once './interface/Model.php';
-require_once './classes/User.php';
-require_once './classes/Admin.php';
-require_once './classes/Customer.php';
-require_once './classes/Transaction.php';
-require_once './classes/Deposit.php';
-require_once './classes/Withdrawal.php';
-require_once './classes/Transfer.php';
 
 class BankingApp
 {
@@ -288,4 +277,4 @@ class BankingApp
 }
 
 $bank = new BankingApp( new JsonStorage() );
-print_r( $bank->getUserBalance('tanjil@example.com') );
+print_r( $bank->getUserBalance( 'taher@example.com' ) );
