@@ -1,11 +1,8 @@
 <?php
 namespace BankingApp;
 
-require_once './vendor/autoload.php';
-
 use BankingApp\Classes\Customer;
 use BankingApp\Classes\Deposit;
-use BankingApp\Classes\JsonStorage;
 use BankingApp\Classes\Transaction;
 use BankingApp\Classes\Transfer;
 use BankingApp\Classes\User;
@@ -30,15 +27,18 @@ class BankingApp
     public function loginUser( string $email, string $pass )
     {
         $returnData = [
-            'status'  => 'failed',
-            'message' => "Sorry the given credentials didn't match!",
+            'status'    => 'failed',
+            'message'   => "Sorry the given credentials didn't match!",
+            'user_data' => [],
         ];
 
         foreach ( $this->users as $user ) {
             if ( $user['email'] === $email ) {
                 if ( password_verify( $pass, $user['password'] ) ) {
-                    $returnData['status']  = 'success';
-                    $returnData['message'] = "Welcome back " . $user['name'];
+                    $returnData['status']    = 'success';
+                    $returnData['message']   = "Welcome back " . $user['name'];
+                    $returnData['user_data'] = $this->getLoggedUserData( $email );
+
                     return $returnData;
                 }
             }
@@ -252,6 +252,22 @@ class BankingApp
         return $this->transactions;
     }
 
+	private function getLoggedUserData( string $userEmail ): array
+    {
+        $userData = [];
+
+        foreach ( $this->users as $user ) {
+            if ( $user['email'] === $userEmail ) {
+                $userData['type']  = $user['type'];
+                $userData['name']  = $user['name'];
+                $userData['email'] = $user['email'];
+                break;
+            }
+        }
+
+        return $userData;
+    }
+
     private function saveTransactions(): bool
     {
         $transactionSaved = $this->storage->save( Transaction::getModelName(), $this->transactions );
@@ -275,6 +291,3 @@ class BankingApp
         return false;
     }
 }
-
-$bank = new BankingApp( new JsonStorage() );
-print_r( $bank->getUserBalance( 'taher@example.com' ) );
