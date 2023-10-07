@@ -18,7 +18,7 @@
         "name": "Abu Taher",
         "email": "taher@example.com",
         "password": "$2y$10$HVk\/hFJ93J\/bYX7t0WIWROxSVxKM9mwoAI\/n22Qxar9PSMxwAvtAa",
-        "balance": 20000
+        "balance": 22000
     },
     {
         "type": "customer",
@@ -32,6 +32,13 @@
         "name": "Limon Ahmed",
         "email": "limon@example.com",
         "password": "$2y$10$Ikko0lQsT6LXep\/kBecTn.sicmNCSG0pD.ipzl2La5d1IcYxGs2Oi",
+        "balance": 8000
+    },
+    {
+        "type": "admin",
+        "name": "SuperAdmin",
+        "email": "super@admin.com",
+        "password": "$2y$10$t3JLi6\/ZHxBbCxyY6NM99urlZIsc8rO6jb0wOUU1fz\/AoYf1QC9yy",
         "balance": 0
     }
 ]

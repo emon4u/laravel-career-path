@@ -22,6 +22,7 @@ class CLIApp
             if ( empty( $this->loggedInUser ) ) {
                 printf( "1. Login\n" );
                 printf( "2. Register\n" );
+                printf( "3. Exit\n" );
                 $choice = intval( readline( "Enter your option: " ) );
 
                 switch ( $choice ) {
@@ -30,6 +31,10 @@ class CLIApp
                         break;
                     case 2:
                         $this->register();
+                        break;
+                    case 3:
+                        printf( "Exit Application.\n" );
+                        exit( 0 );
                         break;
                     default:
                         printf( "Invalid option. Please try again.\n" );
@@ -42,20 +47,17 @@ class CLIApp
                     printf( "3. Transfer Money\n" );
                     printf( "4. View Current Balance\n" );
                     printf( "5. View Transactions\n" );
+                    printf( "6. Logout\n" );
                 } elseif ( $this->loggedInUser['type'] === UserType::ADMIN->value ) {
                     printf( "1. View All Customers\n" );
                     printf( "2. View All Transactions\n" );
                     printf( "3. View A User's Transactions\n" );
+                    printf( "4. Logout\n" );
                 }
-
-                printf( "0. Logout\n" );
 
                 $choice = intval( readline( "Enter your option: " ) );
 
                 switch ( $choice ) {
-                    case 0:
-                        $this->logout();
-                        break;
                     case 1:
                         if ( $this->loggedInUser['type'] === UserType::CUSTOMER->value ) {
                             $this->depositMoney();
@@ -80,12 +82,17 @@ class CLIApp
                     case 4:
                         if ( $this->loggedInUser['type'] === UserType::CUSTOMER->value ) {
                             $this->viewCurrentBalance();
+                        } elseif ( $this->loggedInUser['type'] === UserType::ADMIN->value ) {
+                            $this->logout();
                         }
                         break;
                     case 5:
                         if ( $this->loggedInUser['type'] === UserType::CUSTOMER->value ) {
                             $this->viewTransactions();
                         }
+                        break;
+                    case 6:
+                        $this->logout();
                         break;
                     default:
                         printf( "Invalid option. Please try again.\n" );
@@ -103,10 +110,10 @@ class CLIApp
         $loginResult = $this->bankingApp->loginUser( $email, $password );
 
         if ( $loginResult['status'] === 'success' ) {
-            printf( $loginResult['message'] . "\n" );
+            echo $loginResult['message'] . "\n";
             $this->loggedInUser = $loginResult['user_data'];
         } else {
-            printf( $loginResult['message'] . "\n" );
+            echo $loginResult['message'] . "\n";
         }
     }
 
@@ -118,7 +125,7 @@ class CLIApp
 
         $registerResult = $this->bankingApp->registerCustomer( $name, $email, $password );
 
-		printf( $registerResult['message'] . "\n" );
+        echo $registerResult['message'] . "\n";
     }
 
     private function logout(): void
@@ -129,41 +136,127 @@ class CLIApp
 
     private function depositMoney(): void
     {
-        // Implement deposit money logic here
+        $amount = readline( "Enter your amount: " );
+        $note   = readline( "Add a deposit note: " );
+
+        $depositResult = $this->bankingApp->addDeposit( $this->loggedInUser['email'], $amount, $note );
+
+        echo $depositResult['message'] . "\n";
     }
 
     private function withdrawMoney(): void
     {
-        // Implement withdraw money logic here
+        $amount = readline( "Enter your amount: " );
+        $note   = readline( "Add a deposit note: " );
+
+        $withdrawalResult = $this->bankingApp->addWithdrawal( $this->loggedInUser['email'], $amount, $note );
+
+        echo $withdrawalResult['message'] . "\n";
     }
 
     private function transferMoney(): void
     {
-        // Implement transfer money logic here
+        $amount         = readline( "Enter your amount: " );
+        $recipientEmail = readline( "Enter recipient email: " );
+        $note           = readline( "Add a deposit note: " );
+
+        $transferResult = $this->bankingApp->addTransfer( $this->loggedInUser['email'], $amount, $recipientEmail, $note );
+
+        echo $transferResult['message'] . "\n";
     }
 
     private function viewCurrentBalance(): void
     {
-        // Implement view current balance logic here
+        $userBalance = $this->bankingApp->getUserBalance( $this->loggedInUser['email'] );
+
+        if ( is_null( $userBalance ) ) {
+            printf( "Something went wrong! \n" );
+        }
+
+        printf( "Your Current Balance is %d\n", $userBalance );
     }
 
     private function viewTransactions(): void
     {
-        // Implement view transactions logic here
+        $transactions = $this->bankingApp->getTransactionsByUser( $this->loggedInUser['email'] );
+
+        printf( "Transactions by %s\n", $this->loggedInUser['name'] );
+        printf( "----------------------\n" );
+        foreach ( $transactions as $transaction ) {
+            printf( "Transition type: %s \n", ucfirst( $transaction['type'] ) );
+            printf( "Amount: %d\n", $transaction['amount'] );
+            printf( "Time: %s\n", $transaction['timestamp'] );
+            printf( "Note: %s\n", $transaction['note'] );
+
+            if ( $transaction['type'] === 'transfer' ) {
+                printf( "Recipient Email: %s\n", $transaction['recipient_email'] );
+            }
+            printf( "----------------------\n" );
+        }
     }
 
     private function viewAllCustomers(): void
     {
-        // Implement view all customers logic here
+        $customers = $this->bankingApp->getAllUsers();
+
+        printf( "List of all customers\n" );
+        printf( "----------------------\n" );
+        foreach ( $customers as $customer ) {
+            if ( $customer['type'] === 'customer' ) {
+                printf( "Name: %s\n", $customer['name'] );
+                printf( "Email: %s\n", $customer['email'] );
+                printf( "Balance: %d\n", $customer['balance'] );
+                printf( "----------------------\n" );
+            }
+        }
     }
 
     private function viewAllTransactions(): void
     {
-        // Implement view all transactions logic here
+        $transactions = $this->bankingApp->getAllTransactions();
+
+        printf( "Transactions by all customers\n" );
+        printf( "----------------------\n" );
+        foreach ( $transactions as $transaction ) {
+            printf( "User Email: %s\n", $transaction['user_email'] );
+            printf( "Transition type: %s \n", ucfirst( $transaction['type'] ) );
+            printf( "Amount: %d\n", $transaction['amount'] );
+            printf( "Time: %s\n", $transaction['timestamp'] );
+            printf( "Note: %s\n", $transaction['note'] );
+
+            if ( $transaction['type'] === 'transfer' ) {
+                printf( "Recipient Email: %s\n", $transaction['recipient_email'] );
+            }
+            printf( "----------------------\n" );
+        }
+
     }
 
     private function viewAUserTransactions(): void
     {
-        // Implement view a user's transactions logic here
+
+        $userEmail = readline( "Enter customers email: " );
+
+        $transactions = $this->bankingApp->getTransactionsByUser( $userEmail );
+
+        if (  ! $transactions ) {
+            printf( "User not found! \n" );
+
+            return;
+        }
+
+        printf( "Transactions by %s\n", $userEmail );
+        printf( "----------------------\n" );
+        foreach ( $transactions as $transaction ) {
+            printf( "Transition type: %s \n", ucfirst( $transaction['type'] ) );
+            printf( "Amount: %d\n", $transaction['amount'] );
+            printf( "Time: %s\n", $transaction['timestamp'] );
+            printf( "Note: %s\n", $transaction['note'] );
+
+            if ( $transaction['type'] === 'transfer' ) {
+                printf( "Recipient Email: %s\n", $transaction['recipient_email'] );
+            }
+            printf( "----------------------\n" );
+        }
     }
 }

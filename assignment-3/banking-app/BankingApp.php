@@ -1,6 +1,7 @@
 <?php
 namespace BankingApp;
 
+use BankingApp\Classes\Admin;
 use BankingApp\Classes\Customer;
 use BankingApp\Classes\Deposit;
 use BankingApp\Classes\Transaction;
@@ -79,6 +80,38 @@ class BankingApp
         return $returnData;
     }
 
+    public function registerAdmin( string $name, string $email, string $pass ): array
+    {
+        $returnData = [
+            'status'  => 'failed',
+            'message' => 'Something went wrong!',
+        ];
+
+        if ( empty( $name ) || empty( $email ) || empty( $pass ) ) {
+            $returnData['message'] = 'Check all required parameter.';
+            return $returnData;
+        }
+
+        foreach ( $this->users as $user ) {
+            if ( $user['email'] === $email ) {
+                $returnData['message'] = "User with the email $email already exists.";
+                return $returnData;
+            }
+        }
+
+        $admin         = new Admin( $name, $email, $pass );
+        $this->users[] = $admin->getUserData();
+
+        $saved = $this->saveUsers();
+
+        if ( $saved ) {
+            $returnData['status']  = 'success';
+            $returnData['message'] = 'Admin has successfully registered.';
+        }
+
+        return $returnData;
+    }
+
     public function addDeposit( string $userEmail, float $amount, string $note ): array
     {
         $returnData = [
@@ -111,7 +144,7 @@ class BankingApp
 
             if ( $saved ) {
                 $returnData['status']  = 'success';
-                $returnData['message'] = 'Transaction successfully.';
+                $returnData['message'] = 'Transaction successfully complete.';
             }
         }
 
@@ -126,7 +159,7 @@ class BankingApp
         ];
 
         if ( empty( $userEmail ) || empty( $amount ) || empty( $note ) ) {
-            $returnData['message'] = 'Check all required parameter';
+            $returnData['message'] = 'Check all required parameter.';
 
             return $returnData;
         }
@@ -155,7 +188,7 @@ class BankingApp
 
             if ( $saved ) {
                 $returnData['status']  = 'success';
-                $returnData['message'] = 'Transaction successfully.';
+                $returnData['message'] = 'Transaction successfully complete.';
             }
         }
 
@@ -252,7 +285,12 @@ class BankingApp
         return $this->transactions;
     }
 
-	private function getLoggedUserData( string $userEmail ): array
+    public function getAllUsers(): array
+    {
+        return $this->users;
+    }
+
+    private function getLoggedUserData( string $userEmail ): array
     {
         $userData = [];
 
